@@ -5,7 +5,7 @@ import (
 
 	"github.com/alibaba/RedisShake/pkg/libs/log"
 
-	"github.com/vinllen/redis-go-cluster"
+	"github.com/dreamChou24/redis-go-cluster"
 )
 
 const (

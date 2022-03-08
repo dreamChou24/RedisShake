@@ -1,10 +1,12 @@
 package utils
 
 import (
+	"strings"
+
 	"github.com/alibaba/RedisShake/pkg/libs/log"
 
+	redigoCluster "github.com/dreamChou24/redis-go-cluster"
 	redigo "github.com/garyburd/redigo/redis"
-	redigoCluster "github.com/vinllen/redis-go-cluster"
 )
 
 var (
@@ -53,6 +55,12 @@ func (cc *ClusterConn) Do(commandName string, args ...interface{}) (reply interf
 
 // just add into batcher
 func (cc *ClusterConn) Send(commandName string, args ...interface{}) error {
+	// mset do not pipline
+	if strings.ToUpper(commandName) == "MGET" || strings.ToUpper(commandName) == "MSET" || strings.ToUpper(commandName) == "MSETNX" {
+		_, err := cc.Do(strings.ToUpper(commandName), args...)
+		return err
+	}
+
 	if cc.batcher == nil {
 		cc.batcher = cc.client.NewBatch()
 	}

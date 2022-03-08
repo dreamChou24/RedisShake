@@ -29,8 +29,8 @@ import (
 	conf "github.com/alibaba/RedisShake/redis-shake/configure"
 
 	"github.com/FZambia/go-sentinel"
+	redigoCluster "github.com/dreamChou24/redis-go-cluster"
 	redigo "github.com/garyburd/redigo/redis"
-	redigoCluster "github.com/vinllen/redis-go-cluster"
 )
 
 func OpenRedisConn(target []string, authType, passwd string, isCluster bool, tlsEnable bool, tlsSkipVerify bool) redigo.Conn {
