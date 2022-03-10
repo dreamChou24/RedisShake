@@ -1,4 +1,3 @@
-import subprocess
 import os
 
 """
@@ -117,6 +116,5 @@ for line in lines:
 with open(redis_shake_conf, 'w') as f:
     f.write('\n'.join(new_lines))
 
-    
-subprocess.call('/usr/local/app/redis-shake -type=%s -conf=/usr/local/app/redis-shake.conf' % TYPE, shell=True)
+os.system('/usr/local/app/redis-shake -type=%s -conf=/usr/local/app/redis-shake.conf' % TYPE)
 
