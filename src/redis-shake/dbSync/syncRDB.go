@@ -4,13 +4,14 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
-	"github.com/alibaba/RedisShake/pkg/libs/log"
-	"github.com/alibaba/RedisShake/redis-shake/base"
-	"github.com/alibaba/RedisShake/redis-shake/common"
-	"github.com/alibaba/RedisShake/redis-shake/configure"
-	"github.com/alibaba/RedisShake/redis-shake/filter"
 	"sync"
 	"time"
+
+	"github.com/alibaba/RedisShake/pkg/libs/log"
+	"github.com/alibaba/RedisShake/redis-shake/base"
+	utils "github.com/alibaba/RedisShake/redis-shake/common"
+	conf "github.com/alibaba/RedisShake/redis-shake/configure"
+	"github.com/alibaba/RedisShake/redis-shake/filter"
 
 	"github.com/alibaba/RedisShake/redis-shake/metric"
 )
@@ -66,8 +67,8 @@ func (ds *DbSyncer) syncRDBFile(reader *bufio.Reader, target []string, authType,
 							}
 						}
 
-						log.Debugf("DbSyncer[%d] start restoring key[%s] with value length[%v]", ds.id, e.Key, len(e.Value))
-
+						// log.Debugf("DbSyncer[%d] start restoring key[%s] with value length[%v]", ds.id, e.Key, len(e.Value))
+						log.Debugf("DbSyncer[%d] start restoring key[%s] with value length[%v] with value [%s]", ds.id, e.Key, len(e.Value), e.Value)
 						utils.RestoreRdbEntry(c, e)
 						log.Debugf("DbSyncer[%d] restore key[%s] ok", ds.id, e.Key)
 					}

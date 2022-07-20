@@ -35,6 +35,7 @@ FILTER_KEY_WHITELIST = os.getenv('FILTER_KEY_WHITELIST')
 FILTER_KEY_BLACKLIST = os.getenv('FILTER_KEY_BLACKLIST')
 LOG_LEVEL = os.getenv('LOG_LEVEL')
 BIG_KEY_THRESHOLD = os.getenv('BIG_KEY_THRESHOLD')
+SYNC_AND_INCREMENT = os.getenv('SYNC_AND_INCREMENT')
 TYPE = os.getenv('TYPE')
 
 redis_shake_conf = '/usr/local/app/redis-shake.conf'
@@ -109,6 +110,11 @@ for line in lines:
         continue
     if line.strip().startswith('big_key_threshold = 524288000') and BIG_KEY_THRESHOLD != '524288000':
         new_line = 'big_key_threshold = %s' % BIG_KEY_THRESHOLD
+        new_lines.append(new_line)
+        print(new_line)
+        continue
+    if line.strip().startswith('sync.and.increment = true') and SYNC_AND_INCREMENT != 'true':
+        new_line = 'sync.and.increment = %s' % SYNC_AND_INCREMENT
         new_lines.append(new_line)
         print(new_line)
         continue

@@ -2,15 +2,16 @@ package dbSync
 
 import (
 	"bufio"
-	"github.com/alibaba/RedisShake/pkg/libs/log"
-	"github.com/alibaba/RedisShake/redis-shake/base"
-	"github.com/alibaba/RedisShake/redis-shake/common"
-	"github.com/alibaba/RedisShake/redis-shake/heartbeat"
-	"github.com/alibaba/RedisShake/redis-shake/metric"
 	"io"
 
+	"github.com/alibaba/RedisShake/pkg/libs/log"
+	"github.com/alibaba/RedisShake/redis-shake/base"
+	utils "github.com/alibaba/RedisShake/redis-shake/common"
+	"github.com/alibaba/RedisShake/redis-shake/heartbeat"
+	"github.com/alibaba/RedisShake/redis-shake/metric"
+
 	"github.com/alibaba/RedisShake/redis-shake/checkpoint"
-	"github.com/alibaba/RedisShake/redis-shake/configure"
+	conf "github.com/alibaba/RedisShake/redis-shake/configure"
 )
 
 // one sync link corresponding to one DbSyncer
@@ -145,8 +146,13 @@ func (ds *DbSyncer) Sync() {
 		metric.GetMetric(ds.id).SetFullSyncProgress(ds.id, 100)
 	}
 
-	// sync increment
-	base.Status = "incr"
-	close(ds.WaitFull)
-	ds.syncCommand(reader, ds.target, conf.Options.TargetAuthType, ds.targetPassword, conf.Options.TargetTLSEnable, conf.Options.TargetTLSSkipVerify, dbid)
+	if conf.Options.SyncAndIncrement {
+		// sync increment
+		base.Status = "incr"
+		close(ds.WaitFull)
+		ds.syncCommand(reader, ds.target, conf.Options.TargetAuthType, ds.targetPassword, conf.Options.TargetTLSEnable, conf.Options.TargetTLSSkipVerify, dbid)
+	} else {
+		close(ds.WaitFull)
+	}
+
 }

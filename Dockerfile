@@ -22,6 +22,8 @@ ENV LOG_LEVEL info
 
 ENV BIG_KEY_THRESHOLD 524288000
 
+ENV SYNC_AND_INCREMENT true
+
 ENV TYPE sync
 
 CMD python /usr/local/app/start.py

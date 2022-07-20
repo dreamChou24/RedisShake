@@ -8,8 +8,8 @@ import (
 
 	"github.com/alibaba/RedisShake/pkg/libs/log"
 
-	"github.com/alibaba/RedisShake/redis-shake/common"
-	"github.com/alibaba/RedisShake/redis-shake/configure"
+	utils "github.com/alibaba/RedisShake/redis-shake/common"
+	conf "github.com/alibaba/RedisShake/redis-shake/configure"
 	"github.com/alibaba/RedisShake/redis-shake/dbSync"
 )
 
@@ -108,6 +108,8 @@ func (cmd *CmdSync) Main() {
 	wg.Wait()
 	close(syncChan)
 
-	// never quit because increment syncing is always running
-	select {}
+	if conf.Options.SyncAndIncrement {
+		// never quit because increment syncing is always running
+		select {}
+	}
 }

@@ -86,6 +86,9 @@ type Configuration struct {
 	Version           string        // version
 	Type              string        // input mode -type=xxx
 	TargetDBMap       map[int]int   // target db map
+
+	// new Option
+	SyncAndIncrement bool `config:"sync.and.increment"`
 }
 
 var Options Configuration
